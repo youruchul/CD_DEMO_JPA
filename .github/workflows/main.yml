@@ -27,7 +27,7 @@ jobs:
         run: ./gradlew build
 
       - name: 도커 이미지 빌드 # (2)
-        run: docker build -t jinu0125/kookbeetest .
+        run: docker build -t youruchul/demo .
 
       - name: Docker Hub 로그인 # (3)
         uses: docker/login-action@v2
@@ -36,7 +36,7 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Docker Hub 퍼블리시 # (4)
-        run: docker push jinu0125/kookbeetest
+        run: docker push youruchul/demo
       - name: hhh
         run: echo ${{ secrets.DOCKER_USERNAME }}
         
@@ -58,7 +58,7 @@ jobs:
           port: ${{ secrets.GCP_SSH_PORT }}
           script: |
             sudo su
-            sudo docker stop $(sudo docker ps -a | grep kookbeetest | awk '{print $1}') 
-            sudo docker rm $(sudo docker ps -a | grep kookbeetest | awk '{print $1}') 
-            sudo docker pull jinu0125/kookbeetest
-            sudo docker run -d -p 80:8080 --name kookbeetest jinu0125/kookbeetest
+            sudo docker stop $(sudo docker ps -a | grep demo | awk '{print $1}') 
+            sudo docker rm $(sudo docker ps -a | grep demo | awk '{print $1}') 
+            sudo docker pull youruchul/demo
+            sudo docker run -d -p 80:8080 --name demo youruchul/demo
